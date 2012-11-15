@@ -30,3 +30,25 @@ class TestMyView(unittest.TestCase):
         info = my_view(request)
         self.assertEqual(info['one'].name, 'one')
         self.assertEqual(info['project'], 'app')
+
+class FunctionalTests(unittest.TestCase):
+    import os
+    from paste.deploy.loadwsgi import appconfig
+    here = os.path.dirname(__file__)
+    settings = appconfig('config:' + os.path.join(here, '../', 'development.ini'))
+
+    def setUp(self):
+        print self.settings
+        settings = {
+            'sqlalchemy.url':'sqlite:///home/home/python/prod/busbeep/app/app.sqlite'
+        }
+        from app import main
+        #the_app = main({'wrong':'sad face'}, settings={'sqlalchemy.url':'hi there'})
+        #the_app = main({}, **self.settings)
+        the_app = main({}, **settings)
+        from webtest import TestApp
+        self.testapp = TestApp(the_app)
+
+    def test_root(self):
+        assert True
+
