@@ -16,9 +16,9 @@ def my_view(request):
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
     return { 'one':one, 'project':'app' }
 
-@view_config(route_name='transmitter', renderer='templates/mytemplate.pt')
+@view_config(route_name='transmitter', renderer='templates/transmitter.pt')
 def my_transmitter(request):
-    return { 'hmm':'testing confusion'  }
+    return { 'hmm':'testing confusion', 'project':'app'  }
 
 
 

@@ -26,3 +26,9 @@ class MyModel(Base):
         self.name = name
         self.value = value
 
+class Transmitter(Base):
+    __tablename__ = 'transmitters'
+    id = Column(Integer, primary_key=True)
+    t_num = Column(Text, unique=True)
+
+

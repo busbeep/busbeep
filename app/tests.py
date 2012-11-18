@@ -37,7 +37,7 @@ class ViewWikiTests(unittest.TestCase):
         _registerRoutes(self.config)
         request = testing.DummyRequest()
         response = self._callFUT(request)
-        self.assertEqual(response['one'].name, 'one')
+        self.assertEqual(response['one'].value, 55)
 
     def test_transmitter(self):
         from .views import my_transmitter
