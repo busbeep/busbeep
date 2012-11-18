@@ -6,10 +6,6 @@ here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.txt')).read()
 CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 
-tests_require = [
-        'WebTest',
-        ]
-
 requires = [
     'pyramid',
     'SQLAlchemy',
@@ -18,6 +14,7 @@ requires = [
     'pyramid_debugtoolbar',
     'zope.sqlalchemy',
     'waitress',
+    'WebTest',
     ]
 
 setup(name='app',
