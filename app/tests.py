@@ -3,12 +3,11 @@ import transaction
 
 from pyramid import testing
 
-from .models import DBSession
-
 def _initDb():
     from sqlalchemy import create_engine
     engine = create_engine('sqlite://')
     from .models import (
+        DBSession,
         Base,
         MyModel,
         )
@@ -25,7 +24,7 @@ class TestMyView(unittest.TestCase):
         self.session = _initDb()
 
     def tearDown(self):
-        DBSession.remove()
+        self.session.remove()
         testing.tearDown()
 
     def test_it(self):
@@ -39,5 +38,19 @@ class TestMyView(unittest.TestCase):
 #        from .views import  my_view
 #        request = testing.DummyRequest()
 #        info = my_view(request)
-        
 
+
+class FunctionalTests(unittest.TestCase):
+    import os
+    from paste.deploy.loadwsgi import appconfig
+    here = os.path.dirname(__file__)
+    settings = appconfig('config:' + os.path.join(here, '../', 'development.ini'))
+
+    def setUp(self):
+        from app import main
+        the_app = main({}, **self.settings)
+        from webtest import TestApp
+        self.testapp = TestApp(the_app)
+
+    def test_root(self):
+        assert True
