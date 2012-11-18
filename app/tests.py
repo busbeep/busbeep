@@ -18,6 +18,37 @@ def _initDb():
         DBSession.add(model)
     return DBSession
 
+def _registerRoutes(config):
+    config.add_route("transmitter","/transmitter/{t_num}")
+
+
+class ViewWikiTests(unittest.TestCase):
+    def setUp(self):
+        self.config = testing.setUp()
+
+    def tearDown(self):
+        testing.tearDown()
+
+    def _callFUT(self, request):
+        from .views import my_view
+        return my_view(request)
+
+    def test_it(self):
+        _registerRoutes(self.config)
+        request = testing.DummyRequest()
+        response = self._callFUT(request)
+        self.assertEqual(response['one'].name, 'one')
+
+    def test_transmitter(self):
+        from .views import my_transmitter
+
+        request = testing.DummyRequest()
+        response = my_transmitter(request)
+        self.assertEqual(response['hmm'], 'testing confusion')
+
+
+
+
 class TestMyView(unittest.TestCase):
     def setUp(self):
         self.config = testing.setUp()

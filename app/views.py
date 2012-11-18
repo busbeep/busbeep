@@ -14,14 +14,20 @@ def my_view(request):
         one = DBSession.query(MyModel).filter(MyModel.name=='one').first()
     except DBAPIError:
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
-    return {'one':one, 'project':'app'}
+    return { 'one':one, 'project':'app' }
+
+@view_config(route_name='transmitter', renderer='templates/mytemplate.pt')
+def my_transmitter(request):
+    return { 'hmm':'testing confusion'  }
+
+
 
 conn_err_msg = """\
 Pyramid is having a problem using your SQL database.  The problem
 might be caused by one of the following things:
 
 1.  You may need to run the "initialize_app_db" script
-    to initialize your database tables.  Check your virtual 
+    to initialize your database tables.  Check your virtual
     environment's "bin" directory for this script and try to run it.
 
 2.  Your database server may not be running.  Check that the
